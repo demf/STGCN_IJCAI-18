@@ -123,6 +123,6 @@ def model_test(inputs, batch_size, n_his, n_pred, inf_mode, load_path='./output/
             te = evl[ix - 2:ix + 1]
             te_ext = evl_extend[ix - 2:ix + 1]
             print(f'Time Step {ix + 1}: MAPE {te[0]:7.3%}; MAE  {te[1]:4.3f}; RMSE {te[2]:6.3f}.')
-            print(f'Time Step {ix + 1}: NRMSE {te_ext[0]:4.3f}; R^2  {te_ext[1]:4.3f}.')
+            print(f'Time Step {ix + 1}: NRMSE {te_ext[0]:4.3f}; R^2  {te_ext[1]:4.3f}; MAE  {te[1]:4.3f}.')
         print(f'Model Test Time {time.time() - start_time:.3f}s')
     print('Testing model finished!')
