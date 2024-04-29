@@ -120,7 +120,7 @@ def evaluation_extend(y, y_, x_stats):
         # single_step case
         v = z_inverse(y, x_stats['mean'], x_stats['std'])
         v_ = z_inverse(y_, x_stats['mean'], x_stats['std'])
-        return np.array([NRMSE(v, v_), r2_score(v, v_)])
+        return np.array([NRMSE(v, v_), r2_score(v, v_), MAE(v, v_)])
     else:
         # multi_step case
         tmp_list = []
