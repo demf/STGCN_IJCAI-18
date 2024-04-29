@@ -78,7 +78,7 @@ def r2_score(v, v_):
     """
     return 1 - (np.sum((v_ - v) ** 2) / np.sum((v_ - np.mean(v)) ** 2))
 
-def evaluatireturn 1 - (((v_ - v) ** 2) / ((v_ - np.mean(v)) ** 2))on(y, y_, x_stats):
+def evaluation(y, y_, x_stats):
     '''
     Evaluation function: interface to calculate MAPE, MAE and RMSE between ground truth and prediction.
     Extended version: multi-step prediction can be calculated by self-calling.
