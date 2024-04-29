@@ -93,9 +93,34 @@ def evaluation(y, y_, x_stats):
         # single_step case
         v = z_inverse(y, x_stats['mean'], x_stats['std'])
         v_ = z_inverse(y_, x_stats['mean'], x_stats['std'])
-        r_2 = r2_score(v, v_)
-        print(f'r_2: {r_2}')
-        return np.array([RMSE(v, v_), NRMSE(v, v_), MAE(v, v_)])
+        return np.array([MAPE(v, v_), MAE(v, v_), RMSE(v, v_)])
+    else:
+        # multi_step case
+        tmp_list = []
+        # y -> [time_step, batch_size, n_route, 1]
+        y = np.swapaxes(y, 0, 1)
+        # recursively call
+        for i in range(y_.shape[0]):
+            tmp_res = evaluation(y[i], y_[i], x_stats)
+            tmp_list.append(tmp_res)
+        return np.concatenate(tmp_list, axis=-1)
+
+def evaluation_extend(y, y_, x_stats):
+    '''
+    Evaluation function: interface to calculate NRMSE and R^2 between ground truth and prediction.
+    Extended version: multi-step prediction can be calculated by self-calling.
+    :param y: np.ndarray or int, ground truth.
+    :param y_: np.ndarray or int, prediction.
+    :param x_stats: dict, paras of z-scores (mean & std).
+    :return: np.ndarray, averaged metric values.
+    '''
+    dim = len(y_.shape)
+
+    if dim == 3:
+        # single_step case
+        v = z_inverse(y, x_stats['mean'], x_stats['std'])
+        v_ = z_inverse(y_, x_stats['mean'], x_stats['std'])
+        return np.array([NRMSE(v, v_), r2_score(v, v_)])
     else:
         # multi_step case
         tmp_list = []
