@@ -50,7 +50,15 @@ def RMSE(v, v_):
     :return: int, RMSE averages on all elements of input.
     '''
     return np.sqrt(np.mean((v_ - v) ** 2))
-
+    
+def NRMSE(v, v_):
+    '''
+    Normalize mean squared error.
+    :param v: np.ndarray or int, ground truth.
+    :param v_: np.ndarray or int, prediction.
+    :return: int, NRMSE averages on all elements of input.
+    '''
+    return (np.sqrt(np.mean((v_ - v) ** 2))) / np.mean(v)
 
 def MAE(v, v_):
     '''
@@ -61,8 +69,16 @@ def MAE(v, v_):
     '''
     return np.mean(np.abs(v_ - v))
 
+def r2_score(v, v_):
+    """
+    R squared(R^2).
+    :param v: np.ndarray or int, ground truth.
+    :param v_: np.ndarray or int, prediction.
+    :return: float, R^2.
+    """
+    return 1 - (np.sum((v_ - v) ** 2) / np.sum((v_ - np.mean(v)) ** 2))
 
-def evaluation(y, y_, x_stats):
+def evaluatireturn 1 - (((v_ - v) ** 2) / ((v_ - np.mean(v)) ** 2))on(y, y_, x_stats):
     '''
     Evaluation function: interface to calculate MAPE, MAE and RMSE between ground truth and prediction.
     Extended version: multi-step prediction can be calculated by self-calling.
@@ -77,7 +93,7 @@ def evaluation(y, y_, x_stats):
         # single_step case
         v = z_inverse(y, x_stats['mean'], x_stats['std'])
         v_ = z_inverse(y_, x_stats['mean'], x_stats['std'])
-        return np.array([MAPE(v, v_), MAE(v, v_), RMSE(v, v_)])
+        return np.array([RMSE(v, v_), NRMSE(v, v_), r2_score(v, v_), MAE(v, v_)])
     else:
         # multi_step case
         tmp_list = []
