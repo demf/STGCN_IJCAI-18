@@ -6,7 +6,7 @@
 # @Github   : https://github.com/VeritasYin/Project_Orion
 
 from data_loader.data_utils import gen_batch
-from utils.math_utils import evaluation
+from utils.math_utils import evaluation, evaluation_extend
 from os.path import join as pjoin
 
 import tensorflow as tf
